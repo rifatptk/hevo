@@ -24,6 +24,9 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import ReplayIcon from '@mui/icons-material/Replay';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const filterOptions = [
   '2h',
@@ -550,6 +553,8 @@ const objects = [
     title: 'Apple daily.Sheet1',
     position: 'Nov 24,2022 22:02:58 MYT',
     eventCount: 236,
+    active: true,
+    lastIngested: '4 hours ago',
     timeline: [
       {
         timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
@@ -879,6 +884,7 @@ const PipelineActivity = () => {
                 }}
               >
                 <NoMaxWidthTooltip
+                  arrow
                   title={barChartTooltip({
                     billable: 0,
                     nonBillable: 243,
@@ -946,7 +952,7 @@ const PipelineActivity = () => {
         ))}
       </Box>
 
-      {/* objects */}
+      {/* objects-header */}
       <Box
         sx={{
           display: 'flex',
@@ -956,7 +962,7 @@ const PipelineActivity = () => {
           color: colors.grey[400],
         }}
       >
-        <Box sx={{ p: '20px' }}>
+        <Box sx={{ p: '20px', pb: 0 }}>
           <FormGroup>
             <FormControlLabel
               control={
@@ -976,7 +982,6 @@ const PipelineActivity = () => {
           </FormGroup>
         </Box>
         <Typography>Events Ingested</Typography>
-
         <Box
           sx={{
             display: 'flex',
@@ -996,6 +1001,121 @@ const PipelineActivity = () => {
           <Typography>1 - 1 of 1</Typography>
           <IconButton>
             <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
+          </IconButton>
+          {/* filter */}
+          <IconButton>
+            <FilterListIcon sx={{ color: colors.grey[300] }} />
+          </IconButton>
+          <IconButton>
+            <ReplayIcon sx={{ color: colors.grey[300] }} />
+          </IconButton>
+        </Box>
+      </Box>
+
+      {/* object list */}
+      <Box
+        sx={{
+          pr: '20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 3,
+          backgroundColor: colors.primary[400],
+          borderRadius: '5px',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <IconButton>
+            <Checkbox
+              sx={{
+                color: colors.grey[500],
+                '&.Mui-checked': {
+                  color: colors.blueAccent[500],
+                },
+              }}
+            />
+          </IconButton>
+          <Box>
+            <Typography>{objects[0].title}</Typography>
+            <small>
+              <span style={{ color: colors.grey[300] }}>Position: </span>
+              {objects[0].position}
+            </small>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '40px',
+            color: colors.blueAccent[500],
+          }}
+        >
+          <NoMaxWidthTooltip
+            arrow
+            title={barChartTooltip({
+              billable: 0,
+              nonBillable: 243,
+              timestamp: 'Nov 10th 2022 - Nov 30th 2022',
+            })}
+          >
+            <h2 style={{ margin: 0, color: colors.grey[100] }}>
+              {objects[0].eventCount}
+            </h2>
+          </NoMaxWidthTooltip>
+          {/* chart */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-betweeen',
+              alignItems: 'baseline',
+              gap: '2px',
+            }}
+          >
+            {objects[0].timeline.map((el, i) => (
+              <NoMaxWidthTooltip arrow key={i} title={barChartTooltip(el)}>
+                <Box
+                  sx={{
+                    width: '5px',
+                    height: `${el.total / 10}px`,
+                    borderRadius: `${el.total ? '4px' : '0'}`,
+                    minHeight: '1px',
+                    background: colors.blueAccent[500],
+                    cursor: 'pointer',
+                    '&:hover': {
+                      opacity: 0.5,
+                    },
+                  }}
+                ></Box>
+              </NoMaxWidthTooltip>
+            ))}
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ textAlign: 'right' }}>
+            <Typography sx={{ color: colors.greenAccent[500] }}>
+              {objects[0].active ? 'ACTIVE' : 'INACTIVE'}
+            </Typography>
+            <small>
+              <span style={{ color: colors.grey[300] }}>Last Ingested: </span>
+              {objects[0].lastIngested}
+            </small>
+          </Box>
+          <IconButton>
+            <MoreVertIcon />
           </IconButton>
         </Box>
       </Box>
