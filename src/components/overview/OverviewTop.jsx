@@ -300,6 +300,7 @@ const OverviewTop = () => {
             px: 1,
             py: '4px',
             borderRadius: '4px',
+            cursor: 'pointer',
           }}
         >
           ACTIVE
@@ -311,6 +312,7 @@ const OverviewTop = () => {
             placeItems: 'center',
             p: '2px',
             borderRadius: '4px',
+            cursor: 'pointer',
             borderColor: colors.grey[600],
           }}
         >
