@@ -9,6 +9,11 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import { styled } from '@mui/material/styles';
 import PauseCircleOutlinedIcon from '@mui/icons-material/PauseCircleOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import BoltOutlinedIcon from '@mui/icons-material/BoltOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import NotificationImportantOutlinedIcon from '@mui/icons-material/NotificationImportantOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const NoMaxWidthTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -80,6 +85,16 @@ const Overview = () => {
     </div>
   );
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
+  };
+
   return (
     <Box p="20px">
       <Box
@@ -88,6 +103,7 @@ const Overview = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          gap: 3,
           backgroundColor: colors.primary[400],
           borderRadius: '5px',
         }}
@@ -282,7 +298,7 @@ const Overview = () => {
         </Box>
 
         {/* right buttons */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
           <Typography
             sx={{
               fontWeight: 600,
@@ -307,9 +323,89 @@ const Overview = () => {
           >
             <PauseCircleOutlinedIcon />
           </Box>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <Box sx={{ position: 'relative' }}>
+              <IconButton onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
+              {open ? (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 40,
+                    right: 0,
+                    background: colors.primary[500],
+                    border: `1px solid ${colors.grey[700]}`,
+                    width: '180px',
+                    overflow: 'hidden',
+                    borderRadius: '8px',
+                    boxShadow: '0 0 5px #0005',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      padding: '12px 20px',
+                      '&:hover': {
+                        background: colors.grey[500],
+                      },
+                    }}
+                  >
+                    <BoltOutlinedIcon />
+                    <div>Run Now</div>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      padding: '12px 20px',
+                      '&:hover': {
+                        background: colors.grey[500],
+                      },
+                    }}
+                  >
+                    <CalendarMonthOutlinedIcon />
+                    <div>Change Schedule</div>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      padding: '12px 20px',
+                      '&:hover': {
+                        background: colors.grey[500],
+                      },
+                    }}
+                  >
+                    <NotificationImportantOutlinedIcon />
+                    <div>Data Spike Alert</div>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      borderTop: `1px solid ${colors.grey[700]}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      color: colors.redAccent[500],
+                      padding: '12px 20px',
+                      '&:hover': {
+                        background: colors.grey[500],
+                      },
+                    }}
+                  >
+                    <DeleteOutlineOutlinedIcon />
+                    <div>Delete</div>
+                  </Box>
+                </Box>
+              ) : null}
+            </Box>
+          </ClickAwayListener>
         </Box>
       </Box>
     </Box>
