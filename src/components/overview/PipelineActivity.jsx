@@ -1,6 +1,9 @@
 import {
   Box,
+  Checkbox,
   ClickAwayListener,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   Tooltip,
   tooltipClasses,
@@ -19,6 +22,8 @@ import SchemaOutlinedIcon from '@mui/icons-material/SchemaOutlined';
 import { styled } from '@mui/material/styles';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import SearchIcon from '@mui/icons-material/Search';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const filterOptions = [
   '2h',
@@ -421,6 +426,136 @@ const data = [
         timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
         billable: 0,
         nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 320,
+        total: 320,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 252,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
+      },
+    ],
+  },
+];
+
+const objects = [
+  {
+    title: 'Apple daily.Sheet1',
+    position: 'Nov 24,2022 22:02:58 MYT',
+    eventCount: 236,
+    timeline: [
+      {
+        timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
+        billable: 0,
+        nonBillable: 0,
+        total: 0,
       },
       {
         timestamp: 'Nov 29th 2022 6:00PM - 7:00PM',
@@ -809,6 +944,60 @@ const PipelineActivity = () => {
             <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
           </Box>
         ))}
+      </Box>
+
+      {/* objects */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 2,
+          alignItems: 'center',
+          color: colors.grey[400],
+        }}
+      >
+        <Box sx={{ p: '20px' }}>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <IconButton>
+                  <Checkbox
+                    sx={{
+                      color: colors.grey[500],
+                      '&.Mui-checked': {
+                        color: colors.blueAccent[500],
+                      },
+                    }}
+                  />
+                </IconButton>
+              }
+              label="Objects (0 of 1)"
+            />
+          </FormGroup>
+        </Box>
+        <Typography>Events Ingested</Typography>
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: 2,
+            alignItems: 'center',
+            color: colors.grey[400],
+          }}
+        >
+          {/* search */}
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
+          <IconButton>
+            <ArrowBackIosNewIcon sx={{ color: colors.grey[500] }} />
+          </IconButton>
+          <Typography>1 - 1 of 1</Typography>
+          <IconButton>
+            <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
+          </IconButton>
+        </Box>
       </Box>
     </div>
   );
