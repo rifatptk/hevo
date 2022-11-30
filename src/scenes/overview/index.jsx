@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import OverviewTop from '../../components/OverviewTop';
+import OverviewTop from '../../components/overview/OverviewTop';
 
 const Overview = () => {
   return (

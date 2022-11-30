@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { tokens } from '../theme';
+import { tokens } from '../../theme';
 import NorthIcon from '@mui/icons-material/North';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
