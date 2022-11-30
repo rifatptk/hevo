@@ -1,4 +1,12 @@
-import { Box, ClickAwayListener, IconButton, useTheme } from '@mui/material';
+import {
+  Box,
+  ClickAwayListener,
+  IconButton,
+  Tooltip,
+  tooltipClasses,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { tokens } from '../../theme';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
@@ -8,6 +16,9 @@ import NetworkCheckIcon from '@mui/icons-material/NetworkCheck';
 import TransformIcon from '@mui/icons-material/Transform';
 import CloudCircleOutlinedIcon from '@mui/icons-material/CloudCircleOutlined';
 import SchemaOutlinedIcon from '@mui/icons-material/SchemaOutlined';
+import { styled } from '@mui/material/styles';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const filterOptions = [
   '2h',
@@ -528,6 +539,14 @@ const data = [
   },
 ];
 
+const NoMaxWidthTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 'none',
+  },
+});
+
 const PipelineActivity = () => {
   const [activeFilter, setactiveFilter] = useState('24h');
   const theme = useTheme();
@@ -541,6 +560,57 @@ const PipelineActivity = () => {
 
   const handleClickAway = () => {
     setOpen(false);
+  };
+
+  const barChartTooltip = (data) => {
+    return (
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
+          <Box>
+            <Typography>
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 8,
+                  height: 8,
+                  background: colors.blueAccent[500],
+                  marginRight: 8,
+                }}
+              ></span>
+              Billable
+            </Typography>
+            <Typography>{data.billable}</Typography>
+          </Box>
+          <Box>
+            <Typography>
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 8,
+                  height: 8,
+                  background: colors.blueAccent[500],
+                  marginRight: 8,
+                }}
+              ></span>
+              Non-Billable
+            </Typography>
+            <Typography>{data.nonBillable}</Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mt: 2 }}>
+          <AccessTimeOutlinedIcon />
+          <Typography>{data.timestamp}</Typography>
+        </Box>
+      </Box>
+    );
   };
   return (
     <div id="pipeline-activity">
@@ -653,58 +723,90 @@ const PipelineActivity = () => {
         }}
       >
         {data.map((el, i) => (
-          <Box key={i}>
-            {/* top */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <span>{el.icon}</span>
-              <span>{el.title}</span>
-            </Box>
-            {/* middle */}
+          <Box
+            key={i}
+            sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}
+          >
+            <Box>
+              {/* top */}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <span>{el.icon}</span>
+                <span>{el.title}</span>
+              </Box>
+              {/* middle */}
 
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '40px',
-                color: colors.blueAccent[500],
-              }}
-            >
-              <h1 style={{ margin: 0 }}>{el.eventCount}</h1>
-              {/* chart */}
               <Box
                 sx={{
                   display: 'flex',
-                  justifyContent: 'space-betweeen',
-                  alignItems: 'baseline',
-                  gap: '2px',
+                  alignItems: 'center',
+                  gap: '40px',
+                  color: colors.blueAccent[500],
                 }}
               >
-                {el.timeline.map((el, i) => (
-                  <Box
-                    key={i}
-                    sx={{
-                      width: '5px',
-                      height: `${el.total / 10}px`,
-                      borderRadius: `${el.total ? '4px' : '0'}`,
-                      minHeight: '1px',
-                      background: colors.blueAccent[500],
-                    }}
-                  ></Box>
-                ))}
+                <NoMaxWidthTooltip
+                  title={barChartTooltip({
+                    billable: 0,
+                    nonBillable: 243,
+                    timestamp: 'Nov 10th 2022 - Nov 30th 2022',
+                  })}
+                >
+                  <h1 style={{ margin: 0 }}>{el.eventCount}</h1>
+                </NoMaxWidthTooltip>
+                {/* chart */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-betweeen',
+                    alignItems: 'baseline',
+                    gap: '2px',
+                  }}
+                >
+                  {el.timeline.map((el, i) => (
+                    <NoMaxWidthTooltip
+                      arrow
+                      key={i}
+                      title={barChartTooltip(el)}
+                    >
+                      <Box
+                        sx={{
+                          width: '5px',
+                          height: `${el.total / 10}px`,
+                          borderRadius: `${el.total ? '4px' : '0'}`,
+                          minHeight: '1px',
+                          background: colors.blueAccent[500],
+                          cursor: 'pointer',
+                          '&:hover': {
+                            opacity: 0.5,
+                          },
+                        }}
+                      ></Box>
+                    </NoMaxWidthTooltip>
+                  ))}
+                </Box>
               </Box>
+              {/* bottom */}
+              <Tooltip
+                arrow
+                title={
+                  <Typography>
+                    Average Throughput <br /> (Events Per Minute)
+                  </Typography>
+                }
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    color: colors.grey[500],
+                  }}
+                >
+                  <NetworkCheckIcon sx={{ fontSize: '14px' }} />
+                  <small>{el.average} epm</small>
+                </Box>
+              </Tooltip>
             </Box>
-            {/* bottom */}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                color: colors.grey[500],
-              }}
-            >
-              <NetworkCheckIcon />
-              <small>{el.average} epm</small>
-            </Box>
+            <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
           </Box>
         ))}
       </Box>
