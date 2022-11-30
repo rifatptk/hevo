@@ -325,6 +325,7 @@ const OverviewTop = () => {
             {open ? (
               <Box
                 sx={{
+                  zIndex: 9,
                   position: 'absolute',
                   top: 40,
                   right: 0,
