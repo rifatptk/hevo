@@ -27,6 +27,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ReplayIcon from '@mui/icons-material/Replay';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import BoltOutlinedIcon from '@mui/icons-material/BoltOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import NotificationImportantOutlinedIcon from '@mui/icons-material/NotificationImportantOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const filterOptions = [
   '2h',
@@ -692,14 +696,29 @@ const PipelineActivity = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [filterOpen, setfilterOpen] = useState(false);
+  const [activeObjectFilter, setactiveObjectFilter] = useState('All');
+  const [menuopen, setmenuOpen] = useState(false);
 
   const handleClick = () => {
     setOpen((prev) => !prev);
   };
+  const handlefilterClick = () => {
+    setfilterOpen((prev) => !prev);
+  };
+  const handleMenuClick = () => {
+    setmenuOpen((prev) => !prev);
+  };
 
   const handleClickAway = () => {
     setOpen(false);
+  };
+  const handlefilterClickAway = () => {
+    setfilterOpen(false);
+  };
+  const handleMenuClickAway = () => {
+    setmenuOpen(false);
   };
 
   const barChartTooltip = (data) => {
@@ -755,8 +774,8 @@ const PipelineActivity = () => {
   return (
     <div id="pipeline-activity">
       {/* top bar */}
-      <div
-        style={{
+      <Box
+        sx={{
           padding: '20px',
           display: 'flex',
           justifyContent: 'space-between',
@@ -764,20 +783,20 @@ const PipelineActivity = () => {
         }}
       >
         <h4>Pipeline Activity</h4>
-        <div
-          style={{
+        <Box
+          sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            gap: 20,
+            gap: '20px',
           }}
         >
-          <div
-            style={{
+          <Box
+            sx={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              gap: 4,
+              gap: '4px',
             }}
           >
             {filterOptions.slice(0, 3).map((el, i) => (
@@ -846,9 +865,9 @@ const PipelineActivity = () => {
             <IconButton>
               <ReplayOutlinedIcon />
             </IconButton>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
 
       {/* main panel */}
       <Box
@@ -865,7 +884,9 @@ const PipelineActivity = () => {
         {data.map((el, i) => (
           <Box
             key={i}
-            sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}
+            sx={{
+              flex: 1,
+            }}
           >
             <Box>
               {/* top */}
@@ -874,12 +895,11 @@ const PipelineActivity = () => {
                 <span>{el.title}</span>
               </Box>
               {/* middle */}
-
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '40px',
+                  justifyContent: 'space-between',
                   color: colors.blueAccent[500],
                 }}
               >
@@ -924,6 +944,7 @@ const PipelineActivity = () => {
                     </NoMaxWidthTooltip>
                   ))}
                 </Box>
+                <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
               </Box>
               {/* bottom */}
               <Tooltip
@@ -947,7 +968,6 @@ const PipelineActivity = () => {
                 </Box>
               </Tooltip>
             </Box>
-            <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
           </Box>
         ))}
       </Box>
@@ -1003,9 +1023,57 @@ const PipelineActivity = () => {
             <ArrowForwardIosIcon sx={{ color: colors.grey[500] }} />
           </IconButton>
           {/* filter */}
-          <IconButton>
-            <FilterListIcon sx={{ color: colors.grey[300] }} />
-          </IconButton>
+          <ClickAwayListener onClickAway={handlefilterClickAway}>
+            <Box sx={{ position: 'relative' }}>
+              <IconButton onClick={handlefilterClick}>
+                <FilterListIcon sx={{ color: colors.grey[300] }} />
+              </IconButton>
+              {filterOpen ? (
+                <Box
+                  sx={{
+                    zIndex: 9,
+                    position: 'absolute',
+                    top: 40,
+                    right: 0,
+                    background: colors.primary[500],
+                    border: `1px solid ${colors.grey[700]}`,
+                    width: '180px',
+                    overflow: 'hidden',
+                    borderRadius: '8px',
+                    boxShadow: '0 0 5px #0005',
+                  }}
+                >
+                  {[
+                    'All',
+                    'Active',
+                    'Inactive',
+                    'Failed',
+                    'Has Failed Events',
+                    'Needs Mapping',
+                  ].map((el, i) => (
+                    <Box
+                      key={i}
+                      onClick={() => setactiveObjectFilter(el)}
+                      sx={{
+                        padding: '12px 20px',
+                        cursor: 'pointer',
+                        background:
+                          activeObjectFilter === el
+                            ? colors.blueAccent[700]
+                            : '',
+                        '&:hover': {
+                          background: colors.grey[500],
+                        },
+                      }}
+                    >
+                      {el}
+                    </Box>
+                  ))}
+                </Box>
+              ) : null}
+            </Box>
+          </ClickAwayListener>
+
           <IconButton>
             <ReplayIcon sx={{ color: colors.grey[300] }} />
           </IconButton>
@@ -1013,112 +1081,197 @@ const PipelineActivity = () => {
       </Box>
 
       {/* object list */}
-      <Box
-        sx={{
-          pr: '20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: 3,
-          backgroundColor: colors.primary[400],
-          borderRadius: '5px',
-        }}
-      >
+      {objects.map((el, i) => (
         <Box
+          key={i}
           sx={{
+            pr: '20px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            gap: 3,
+            backgroundColor: colors.primary[400],
+            borderRadius: '5px',
+            marginBottom: 1,
           }}
         >
-          <IconButton>
-            <Checkbox
-              sx={{
-                color: colors.grey[500],
-                '&.Mui-checked': {
-                  color: colors.blueAccent[500],
-                },
-              }}
-            />
-          </IconButton>
-          <Box>
-            <Typography>{objects[0].title}</Typography>
-            <small>
-              <span style={{ color: colors.grey[300] }}>Position: </span>
-              {objects[0].position}
-            </small>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '40px',
-            color: colors.blueAccent[500],
-          }}
-        >
-          <NoMaxWidthTooltip
-            arrow
-            title={barChartTooltip({
-              billable: 0,
-              nonBillable: 243,
-              timestamp: 'Nov 10th 2022 - Nov 30th 2022',
-            })}
-          >
-            <h2 style={{ margin: 0, color: colors.grey[100] }}>
-              {objects[0].eventCount}
-            </h2>
-          </NoMaxWidthTooltip>
-          {/* chart */}
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'space-betweeen',
-              alignItems: 'baseline',
-              gap: '2px',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
-            {objects[0].timeline.map((el, i) => (
-              <NoMaxWidthTooltip arrow key={i} title={barChartTooltip(el)}>
-                <Box
-                  sx={{
-                    width: '5px',
-                    height: `${el.total / 10}px`,
-                    borderRadius: `${el.total ? '4px' : '0'}`,
-                    minHeight: '1px',
-                    background: colors.blueAccent[500],
-                    cursor: 'pointer',
-                    '&:hover': {
-                      opacity: 0.5,
-                    },
-                  }}
-                ></Box>
-              </NoMaxWidthTooltip>
-            ))}
+            <IconButton>
+              <Checkbox
+                sx={{
+                  color: colors.grey[500],
+                  '&.Mui-checked': {
+                    color: colors.blueAccent[500],
+                  },
+                }}
+              />
+            </IconButton>
+            <Box>
+              <Typography>{el.title}</Typography>
+              <small>
+                <span style={{ color: colors.grey[300] }}>Position: </span>
+                {el.position}
+              </small>
+            </Box>
           </Box>
-        </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '40px',
+              color: colors.blueAccent[500],
+            }}
+          >
+            <NoMaxWidthTooltip
+              arrow
+              title={barChartTooltip({
+                billable: 0,
+                nonBillable: 243,
+                timestamp: 'Nov 10th 2022 - Nov 30th 2022',
+              })}
+            >
+              <h2 style={{ margin: 0, color: colors.grey[100] }}>
+                {el.eventCount}
+              </h2>
+            </NoMaxWidthTooltip>
+            {/* chart */}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-betweeen',
+                alignItems: 'baseline',
+                gap: '2px',
+              }}
+            >
+              {el.timeline.map((el, i) => (
+                <NoMaxWidthTooltip arrow key={i} title={barChartTooltip(el)}>
+                  <Box
+                    sx={{
+                      width: '5px',
+                      height: `${el.total / 10}px`,
+                      borderRadius: `${el.total ? '4px' : '0'}`,
+                      minHeight: '1px',
+                      background: colors.blueAccent[500],
+                      cursor: 'pointer',
+                      '&:hover': {
+                        opacity: 0.5,
+                      },
+                    }}
+                  ></Box>
+                </NoMaxWidthTooltip>
+              ))}
+            </Box>
+          </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-          }}
-        >
-          <Box sx={{ textAlign: 'right' }}>
-            <Typography sx={{ color: colors.greenAccent[500] }}>
-              {objects[0].active ? 'ACTIVE' : 'INACTIVE'}
-            </Typography>
-            <small>
-              <span style={{ color: colors.grey[300] }}>Last Ingested: </span>
-              {objects[0].lastIngested}
-            </small>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+            }}
+          >
+            <Box sx={{ textAlign: 'right' }}>
+              <Typography sx={{ color: colors.greenAccent[500] }}>
+                {el.active ? 'ACTIVE' : 'INACTIVE'}
+              </Typography>
+              <small>
+                <span style={{ color: colors.grey[300] }}>Last Ingested: </span>
+                {el.lastIngested}
+              </small>
+            </Box>
+
+            <ClickAwayListener onClickAway={handleMenuClickAway}>
+              <Box sx={{ position: 'relative' }}>
+                <IconButton onClick={handleMenuClick}>
+                  <MoreVertIcon />
+                </IconButton>
+                {menuopen ? (
+                  <Box
+                    sx={{
+                      zIndex: 9,
+                      position: 'absolute',
+                      top: 40,
+                      right: 0,
+                      background: colors.primary[500],
+                      border: `1px solid ${colors.grey[700]}`,
+                      width: '180px',
+                      overflow: 'hidden',
+                      borderRadius: '8px',
+                      boxShadow: '0 0 5px #0005',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        padding: '12px 20px',
+                        '&:hover': {
+                          background: colors.grey[500],
+                        },
+                      }}
+                    >
+                      <BoltOutlinedIcon />
+                      <div>Run Now</div>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        padding: '12px 20px',
+                        '&:hover': {
+                          background: colors.grey[500],
+                        },
+                      }}
+                    >
+                      <CalendarMonthOutlinedIcon />
+                      <div>Change Schedule</div>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        padding: '12px 20px',
+                        '&:hover': {
+                          background: colors.grey[500],
+                        },
+                      }}
+                    >
+                      <NotificationImportantOutlinedIcon />
+                      <div>Data Spike Alert</div>
+                    </Box>
+
+                    <Box
+                      sx={{
+                        borderTop: `1px solid ${colors.grey[700]}`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        color: colors.redAccent[500],
+                        padding: '12px 20px',
+                        '&:hover': {
+                          background: colors.grey[500],
+                        },
+                      }}
+                    >
+                      <DeleteOutlineOutlinedIcon />
+                      <div>Delete</div>
+                    </Box>
+                  </Box>
+                ) : null}
+              </Box>
+            </ClickAwayListener>
           </Box>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
         </Box>
-      </Box>
+      ))}
     </div>
   );
 };
