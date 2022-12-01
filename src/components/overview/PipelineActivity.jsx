@@ -692,9 +692,9 @@ const NoMaxWidthTooltip = styled(({ className, ...props }) => (
 });
 
 const PipelineActivity = () => {
-  const [activeFilter, setactiveFilter] = useState('24h');
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [activeFilter, setactiveFilter] = useState('24h');
 
   const [open, setOpen] = useState(false);
   const [filterOpen, setfilterOpen] = useState(false);
