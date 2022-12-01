@@ -17,6 +17,7 @@ import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -129,6 +130,13 @@ const Sidebar = () => {
               title="Overview"
               to="/overview"
               icon={<GridViewOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Activity Log"
+              to="/activity-log"
+              icon={<StickyNote2OutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
