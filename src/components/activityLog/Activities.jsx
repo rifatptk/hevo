@@ -7,7 +7,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const Activities = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(null);
   const activities = [
     {
       title: (
@@ -84,11 +84,7 @@ const Activities = () => {
       {activities.map((el, i) => (
         <Box
           key={i}
-          onClick={() => setSelected(i)}
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
             p: '10px 16px',
             mb: '1px',
             overFlow: 'hidden',
@@ -100,27 +96,51 @@ const Activities = () => {
                 ? '0 0 8px 8px'
                 : '0',
             borderLeft: `4px solid ${
-              i === 1 ? colors.blueAccent[500] : colors.greenAccent[500]
+              i % 2 !== 0 ? colors.blueAccent[500] : colors.greenAccent[500]
             }`,
           }}
         >
-          <Typography sx={{ flex: 3 }}>{el.title}</Typography>
           <Box
             sx={{
-              flex: 1,
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}
           >
-            <Typography>
-              {el.time}
-              <span style={{ color: colors.grey[400], marginLeft: 4 }}>
-                {el.by}
-              </span>
-            </Typography>
-            <KeyboardArrowDownIcon />
+            <Typography sx={{ flex: 3 }}>{el.title}</Typography>
+            <Box
+              sx={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Typography>
+                {el.time}
+                <span style={{ color: colors.grey[400], marginLeft: 4 }}>
+                  {el.by}
+                </span>
+              </Typography>
+              <KeyboardArrowDownIcon
+                onClick={() => setSelected(i !== selected ? i : null)}
+                sx={{ cursor: 'pointer' }}
+              />
+            </Box>
           </Box>
+          {/* expanded */}
+          {selected === i && (
+            <Box
+              sx={{
+                p: '10px 20px',
+                mt: '10px',
+                background: colors.primary[900],
+                borderRadius: '8px',
+              }}
+            >
+              <pre>{JSON.stringify(el.log, null, 2)}</pre>
+            </Box>
+          )}
         </Box>
       ))}
     </Box>

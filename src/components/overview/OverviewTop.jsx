@@ -120,7 +120,7 @@ const OverviewTop = () => {
           color={colors.primary[400]}
           sx={{
             p: '4px',
-            backgroundColor: colors.primary[300],
+            backgroundColor: colors.grey[700],
             borderRadius: '4px',
           }}
         />
@@ -331,12 +331,11 @@ const OverviewTop = () => {
                   position: 'absolute',
                   top: 40,
                   right: 0,
-                  background: colors.primary[500],
+                  background: colors.primary[400],
                   border: `1px solid ${colors.grey[700]}`,
                   width: '180px',
                   overflow: 'hidden',
                   borderRadius: '8px',
-                  boxShadow: '0 0 5px #0005',
                 }}
               >
                 <Box
@@ -346,7 +345,7 @@ const OverviewTop = () => {
                     gap: 2,
                     padding: '12px 20px',
                     '&:hover': {
-                      background: colors.grey[500],
+                      background: colors.grey[700],
                     },
                   }}
                 >
@@ -360,7 +359,7 @@ const OverviewTop = () => {
                     gap: 2,
                     padding: '12px 20px',
                     '&:hover': {
-                      background: colors.grey[500],
+                      background: colors.grey[700],
                     },
                   }}
                 >
@@ -374,7 +373,7 @@ const OverviewTop = () => {
                     gap: 2,
                     padding: '12px 20px',
                     '&:hover': {
-                      background: colors.grey[500],
+                      background: colors.grey[700],
                     },
                   }}
                 >
@@ -391,7 +390,7 @@ const OverviewTop = () => {
                     color: colors.redAccent[500],
                     padding: '12px 20px',
                     '&:hover': {
-                      background: colors.grey[500],
+                      background: colors.grey[700],
                     },
                   }}
                 >

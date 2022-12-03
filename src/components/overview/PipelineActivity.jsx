@@ -826,12 +826,11 @@ const PipelineActivity = () => {
                       position: 'absolute',
                       top: 40,
                       right: 0,
-                      background: colors.primary[500],
+                      background: colors.primary[400],
                       border: `1px solid ${colors.grey[700]}`,
                       width: '180px',
                       overflow: 'hidden',
                       borderRadius: '8px',
-                      boxShadow: '0 0 5px #0005',
                     }}
                   >
                     {filterOptions.slice(3).map((el, i) => (
@@ -844,7 +843,7 @@ const PipelineActivity = () => {
                           background:
                             activeFilter === el ? colors.blueAccent[500] : '',
                           '&:hover': {
-                            background: colors.grey[500],
+                            background: colors.grey[700],
                           },
                         }}
                       >
@@ -1035,12 +1034,11 @@ const PipelineActivity = () => {
                     position: 'absolute',
                     top: 40,
                     right: 0,
-                    background: colors.primary[500],
+                    background: colors.primary[400],
                     border: `1px solid ${colors.grey[700]}`,
                     width: '180px',
                     overflow: 'hidden',
                     borderRadius: '8px',
-                    boxShadow: '0 0 5px #0005',
                   }}
                 >
                   {[
@@ -1062,7 +1060,7 @@ const PipelineActivity = () => {
                             ? colors.blueAccent[700]
                             : '',
                         '&:hover': {
-                          background: colors.grey[500],
+                          background: colors.grey[700],
                         },
                       }}
                     >
@@ -1198,12 +1196,11 @@ const PipelineActivity = () => {
                       position: 'absolute',
                       top: 40,
                       right: 0,
-                      background: colors.primary[500],
+                      background: colors.primary[400],
                       border: `1px solid ${colors.grey[700]}`,
                       width: '180px',
                       overflow: 'hidden',
                       borderRadius: '8px',
-                      boxShadow: '0 0 5px #0005',
                     }}
                   >
                     <Box
@@ -1213,7 +1210,7 @@ const PipelineActivity = () => {
                         gap: 2,
                         padding: '12px 20px',
                         '&:hover': {
-                          background: colors.grey[500],
+                          background: colors.grey[700],
                         },
                       }}
                     >
@@ -1227,7 +1224,7 @@ const PipelineActivity = () => {
                         gap: 2,
                         padding: '12px 20px',
                         '&:hover': {
-                          background: colors.grey[500],
+                          background: colors.grey[700],
                         },
                       }}
                     >
@@ -1241,7 +1238,7 @@ const PipelineActivity = () => {
                         gap: 2,
                         padding: '12px 20px',
                         '&:hover': {
-                          background: colors.grey[500],
+                          background: colors.grey[700],
                         },
                       }}
                     >
@@ -1258,7 +1255,7 @@ const PipelineActivity = () => {
                         color: colors.redAccent[500],
                         padding: '12px 20px',
                         '&:hover': {
-                          background: colors.grey[500],
+                          background: colors.grey[700],
                         },
                       }}
                     >
