@@ -12,7 +12,7 @@ const UsageTable = () => {
       <Box sx={{ p: '20px' }}>
         {/* table header */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box sx={{ flex: 5 }}>
+          <Box sx={{ flex: 7 }}>
             <Typography sx={{ color: colors.grey[500] }}>Pipelines</Typography>
             <strong>0 active out of 2</strong>
           </Box>
@@ -35,7 +35,6 @@ const UsageTable = () => {
         p="20px"
         sx={{
           display: 'flex',
-          // justifyContent: 'space-between',
           alignItems: 'center',
           gap: 2,
           backgroundColor: colors.primary[400],
@@ -44,7 +43,7 @@ const UsageTable = () => {
       >
         <Box
           sx={{
-            flex: 5,
+            flex: 7,
             display: 'flex',
             alignItems: 'center',
             gap: 4,
