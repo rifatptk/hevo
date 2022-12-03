@@ -12,6 +12,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const Activities = () => {
   const theme = useTheme();
@@ -420,9 +421,19 @@ const Activities = () => {
                 mt: '10px',
                 background: colors.primary[900],
                 borderRadius: '8px',
+                position: 'relative',
               }}
             >
               <pre>{JSON.stringify(el.log, null, 2)}</pre>
+
+              <IconButton
+                onClick={() =>
+                  navigator.clipboard.writeText(JSON.stringify(el.log))
+                }
+                sx={{ position: 'absolute', top: '8px', right: '8px' }}
+              >
+                <ContentCopyIcon />
+              </IconButton>
             </Box>
           )}
         </Box>
