@@ -409,7 +409,10 @@ const Activities = () => {
               </Typography>
               <KeyboardArrowDownIcon
                 onClick={() => setSelected(i !== selected ? i : null)}
-                sx={{ cursor: 'pointer' }}
+                sx={{
+                  cursor: 'pointer',
+                  rotate: selected === i ? '180deg' : '',
+                }}
               />
             </Box>
           </Box>
