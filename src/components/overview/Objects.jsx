@@ -8,7 +8,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { tokens } from '../../theme';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -155,6 +155,24 @@ const objectsData = [
 ];
 
 const Objects = ({ barChartTooltip }) => {
+  //==============API CALL================
+  const [data, setdata] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        authorization: 'Basic SVBITk9LSUlNUjpaRFJQNTZGN3FaWmY3RGg0SThnbQ==',
+      },
+    };
+
+    fetch('https://asia.hevodata.com/api/public/v2.0/pipelines', options)
+      .then((response) => response.json())
+      .then((response) => setdata(response))
+      .catch((err) => console.error(err));
+  }, []);
+  console.log(data);
+  //=======================================
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
